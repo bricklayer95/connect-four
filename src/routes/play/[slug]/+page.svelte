@@ -60,6 +60,171 @@
   { id: "cell-49", inPlay: false, cellBelowInPlay: false, belongsTo: null }
 ];
 
+
+const winningPatterns = [
+  // Horizontal wins
+  [0, 1, 2, 3],
+  [1, 2, 3, 4],
+  [2, 3, 4, 5],
+  [3, 4, 5, 6],
+  [7, 8, 9, 10],
+  [8, 9, 10, 11],
+  [9, 10, 11, 12],
+  [10, 11, 12, 13],
+  [14, 15, 16, 17],
+  [15, 16, 17, 18],
+  [16, 17, 18, 19],
+  [17, 18, 19, 20],
+  [21, 22, 23, 24],
+  [22, 23, 24, 25],
+  [23, 24, 25, 26],
+  [24, 25, 26, 27],
+  [28, 29, 30, 31],
+  [29, 30, 31, 32],
+  [30, 31, 32, 33],
+  [31, 32, 33, 34],
+  [35, 36, 37, 38],
+  [36, 37, 38, 39],
+  [37, 38, 39, 40],
+  [38, 39, 40, 41],
+  [42, 43, 44, 45],
+  [43, 44, 45, 46],
+  [44, 45, 46, 47],
+  [45, 46, 47, 48],
+  [49, 50, 51, 52],
+  [50, 51, 52, 53],
+  [51, 52, 53, 54],
+  [52, 53, 54, 55],
+  [56, 57, 58, 59],
+  [57, 58, 59, 60],
+  [58, 59, 60, 61],
+  [59, 60, 61, 62],
+
+  // Vertical wins
+  [0, 7, 14, 21],
+  [1, 8, 15, 22],
+  [2, 9, 16, 23],
+  [3, 10, 17, 24],
+  [4, 11, 18, 25],
+  [5, 12, 19, 26],
+  [6, 13, 20, 27],
+  [7, 14, 21, 28],
+  [8, 15, 22, 29],
+  [9, 16, 23, 30],
+  [10, 17, 24, 31],
+  [11, 18, 25, 32],
+  [12, 19, 26, 33],
+  [13, 20, 27, 34],
+  [14, 21, 28, 35],
+  [15, 22, 29, 36],
+  [16, 23, 30, 37],
+  [17, 24, 31, 38],
+  [18, 25, 32, 39],
+  [19, 26, 33, 40],
+  [20, 27, 34, 41],
+  [21, 28, 35, 42],
+  [22, 29, 36, 43],
+  [23, 30, 37, 44],
+  [24, 31, 38, 45],
+  [25, 32, 39, 46],
+  [26, 33, 40, 47],
+  [27, 34, 41, 48],
+  [28, 35, 42, 49],
+  [29, 36, 43, 50],
+  [30, 37, 44, 51],
+  [31, 38, 45, 52],
+  [32, 39, 46, 53],
+  [33, 40, 47, 54],
+  [34, 41, 48, 55],
+  [35, 42, 49, 56],
+  [36, 43, 50, 57],
+  [37, 44, 51, 58],
+  [38, 45, 52, 59],
+  [39, 46, 53, 60],
+  [40, 47, 54, 61],
+  [41, 48, 55, 62],
+
+  // Diagonal wins (top-left to bottom-right)
+  [0, 8, 16, 24],
+  [1, 9, 17, 25],
+  [2, 10, 18, 26],
+  [3, 11, 19, 27],
+  [7, 15, 23, 31],
+  [8, 16, 24, 32],
+  [9, 17, 25, 33],
+  [10, 18, 26, 34],
+  [14, 22, 30, 38],
+  [15, 23, 31, 39],
+  [16, 24, 32, 40],
+  [17, 25, 33, 41],
+  [8, 16, 24, 32, 40],
+  [9, 17, 25, 33, 41],
+  [10, 18, 26, 34, 42],
+  [15, 23, 31, 39, 47],
+  [16, 24, 32, 40, 48],
+  [17, 25, 33, 41, 49],
+  [24, 32, 40, 48],
+  [25, 33, 41, 49],
+  [26, 34, 42, 50],
+
+  // Diagonal wins (top-right to bottom-left)
+  [3, 9, 15, 21],
+  [4, 10, 16, 22],
+  [5, 11, 17, 23],
+  [6, 12, 18, 24],
+  [10, 16, 22, 28],
+  [11, 17, 23, 29],
+  [12, 18, 24, 30],
+  [13, 19, 25, 31],
+  [17, 23, 29, 35],
+  [18, 24, 30, 36],
+  [19, 25, 31, 37],
+  [20, 26, 32, 38],
+  [11, 17, 23, 29, 35],
+  [12, 18, 24, 30, 36],
+  [13, 19, 25, 31, 37],
+  [18, 24, 30, 36, 42],
+  [19, 25, 31, 37, 43],
+  [24, 30, 36, 42],
+  [25, 31, 37, 43],
+  [26, 32, 38, 44],
+  [31, 37, 43, 49],
+  [32, 38, 44, 50],
+  [37, 43, 49, 55],
+  [38, 44, 50, 56],
+  [43, 49, 55, 61],
+  [44, 50, 56, 62],
+];
+
+// Function to check for a win
+function checkForWin(player) {
+  for (const pattern of winningPatterns) {
+    const [a, b, c, d] = pattern;
+
+    if(cells[a], cells[b], cells[c], cells[d]){
+        if (
+        cells[a].belongsTo === 'You' &&
+        cells[b].belongsTo === 'You' &&
+        cells[c].belongsTo === 'You' &&
+        cells[d].belongsTo === 'You'
+        ) {
+        console.log(`You win!`);
+        return true;
+        }
+
+        if (
+            cells[a].belongsTo === 'Other Player' &&
+            cells[b].belongsTo === 'Other Player' &&
+            cells[c].belongsTo === 'Other Player' &&
+            cells[d].belongsTo === 'Other Player'
+        ) {
+            console.log(`Other Player wins!`);
+            return true;
+        }
+    }
+  }
+  return false;
+}
     //when user creates new game, modal pops up with a link and game code to share with other player and modal stays up until another person joins Waiting for other player...
 
     onMount(() => {
@@ -74,7 +239,40 @@
 
     socket.on('your-turn', () => {
         myTurn = true;
+        resetTimer();
     });
+
+    let seconds = 30; // Set your initial timer value in seconds
+    let timerInterval; // Variable to store the timer interval ID
+
+    // Function to decrement the timer
+    function decrementTimer() {
+    if (seconds > 0) {
+        seconds--;
+    } else {
+        if(myTurn){
+            console.log('now running')
+            socket.emit('next-turn', slug);
+            myTurn = false;
+        }
+        
+        resetTimer();
+        // To stop the timer after the action is performed
+        clearInterval(timerInterval);
+    }
+    }
+
+    // Function to reset the timer
+    function resetTimer() {
+    clearInterval(timerInterval); // Stop the current timer
+    seconds = 30; // Reset the timer to the initial value
+    timerInterval = setInterval(decrementTimer, 1000); // Start a new timer
+    }
+
+    // To stop the timer manually (optional)
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
 
 
 
@@ -108,12 +306,17 @@
             //when get player number cells[cellNum].belongsTo = 'playerOne';
         }
 
+        checkForWin('You');
+        console.log(cells)
+
         myTurn = false;
         cells = cells;
+        resetTimer();
     };
 
     socket.on('start-game', () => {
         gameStarted = true;
+        timerInterval = setInterval(decrementTimer, 1000);
     });
 
         
@@ -202,9 +405,9 @@
     
     <div class="bottom">
         <div class="turn-info">
-            <img src={redTurn} alt="">
-            <p class="sub-text">Your Turn</p>
-            <p class="big-text">15s</p>
+            <img src={myTurn ? redTurn : yellowTurn} alt="">
+            <p class="sub-text">{myTurn ? "You" : "Player 2"}</p>
+            <p class="big-text">{seconds}</p>
         </div>
     </div>
 </main>

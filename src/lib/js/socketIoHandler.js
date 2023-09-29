@@ -116,17 +116,18 @@ export default function injectSocketIO(server) {
         });
 
 
-        io.on('next-turn', (gamePin) => {
-            const usersSet = io.sockets.adapter.rooms.get(gamePin);
-            let usersArray = Array.from(usersSet);
-            usersArray.sort((a, b) => {
-                return a.id - b.id;
-            });
-            usersArray = [{Player1: `${usersArray[0]}`}, {Player2: `${usersArray[1]}`}];
+        socket.on('next-turn', (gamePin) => {
+          const usersSet = io.sockets.adapter.rooms.get(gamePin);
+          console.log('just called', gamePin)
+          const condition = (element) => {
+            return element !== socket.id;
+          };
 
-            console.log(games.find((item) => item.pin === gamePin).turn)
+          const otherSocketId = Array.from(usersSet).filter(condition);
 
-            io.to(usersArray[result]).emit('your-turn');
+          console.log(otherSocketId);
+        
+          io.to(otherSocketId).emit('your-turn');
         })
 
         socket.on('move', (cellId, gamePin) => {

@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "svelte.config.js",
+        "use": "@sveltejs/adapter-vercel",
+        "config": {}
+      }
+    ]
+  }
+  
