@@ -1,2 +1,11 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+
+<script>
+    import MainMenu from '$lib/components/MainMenu.svelte';
+    import Play from '$lib/components/Play.svelte';
+</script>
+
+
+
+
+
+<MainMenu />
